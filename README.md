@@ -11,3 +11,6 @@ playwright mcp
 ```
 claude mcp add playwright npx @playwright/mcp@latest
 ```
+
+# 構成
+test/ にテストケースを格納
