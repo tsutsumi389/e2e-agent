@@ -1,2 +1,3 @@
 test/*
 evidence/*
+.playwright-mcp
