@@ -24,11 +24,20 @@ Operational Guidelines:
 - If the scope is ambiguous, ask clarifying questions before proceeding
 - Provide structured progress reports including: test coverage, pass/fail rates, execution time, and any issues encountered
 
+Test Case Delegation Strategy:
+- Analyze test case dependencies before delegation:
+  * Independent test cases: Delegate each test case individually to playwright-e2e-tester, wait for completion, then return to test-progress-manager for progress tracking
+  * Sequential/dependent test cases: Group related test cases that form a continuous flow and delegate them together as a single batch to playwright-e2e-tester
+- Example: If you have 5 independent test cases, delegate them one by one (Test 1 → complete → Test 2 → complete → Test 3, etc.)
+- Example: If test cases 1, 2, 3 form a continuous user flow (e.g., login → select product → checkout), delegate all three together to playwright-e2e-tester
+- After each delegation completes, update progress tracking and decide on the next delegation based on results
+
 Decision-Making Framework:
 - For single test scenarios: Delegate immediately to playwright-e2e-tester with clear instructions
-- For multiple test areas: Create a logical execution sequence and delegate systematically
-- For complex workflows: Break down into phases and provide checkpoint updates
-- When encountering failures: Analyze impact on overall progress and determine if subsequent tests should proceed
+- For multiple independent test cases: Delegate one test case at a time, wait for completion and return to track progress, then proceed to the next test case
+- For sequential/dependent test flows: Group all related test cases together and delegate as a single batch to maintain flow continuity
+- For complex workflows: Analyze dependencies first, then break down into independent vs. sequential groups
+- When encountering failures: Analyze impact on overall progress and determine if subsequent tests should proceed (especially important for sequential flows where earlier failures may invalidate later tests)
 
 Quality Assurance:
 - Verify that all requested test areas have been addressed
